@@ -54,5 +54,11 @@
   - 2 Filtro circuitBreaker
   - 3 Retry (retentativas)
 
+### Rate limiting
+- um padrão usado para controlar a taxa de tráfego enviada ou recebida.
+
+### Client-side
+- limitadores de taxa do lado do clinte, para restringir o número de solicitações enviadas a um serviço em um determinado periodo.
+
 ## Projeto
 - Para testes, utilizei a ferramenta https://httpd.apache.org/docs/2.4/programs/ab.html ou utilize o choco para facilitar choco install apache-httpd
