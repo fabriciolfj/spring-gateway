@@ -27,4 +27,4 @@
   - Quando um serviço está apresentando falha, o circuito é aberto e executa um outro recurso (fallback).
   - Enquanto o circuito estiver aberto, o recurso original não será chamado.
   - Tempos em tempos, este verifica se o serviço original está operante, caso positivo, o circuito é fechado, caso negativo, circuito manten-se aberto.
-- Precisa de um bean Customer dentro do gateway, para o circuitbreaker funcionar, alem das configurações no application.yml
+- Precisa de um bean Customizer dentro do gateway, para o circuitbreaker funcionar, alem das configurações no application.yml
