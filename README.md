@@ -47,3 +47,9 @@
     }
 ```    
 - Obs: o tempo limite configurado no customizer, terá precedência sobre o tempo limite de resposta definido netty timeout application.yml
+
+### Combinando vários padrões de resiliência
+- Quando se combina vários padrões de resiliência, a sequência fica o seguinte:
+  - 1 TimeLimiter: tempo limite de resposta ao cliente.
+  - 2 Filtro circuitBreaker
+  - 3 Retry (retentativas)
