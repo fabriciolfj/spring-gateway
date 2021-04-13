@@ -53,3 +53,6 @@
   - 1 TimeLimiter: tempo limite de resposta ao cliente.
   - 2 Filtro circuitBreaker
   - 3 Retry (retentativas)
+
+## Projeto
+- Para testes, utilizei a ferramenta https://httpd.apache.org/docs/2.4/programs/ab.html ou utilize o choco para facilitar choco install apache-httpd
