@@ -46,3 +46,4 @@
         .build());
     }
 ```    
+- Obs: o tempo limite configurado no customizer, terá precedência sobre o tempo limite de resposta definido netty timeout application.yml
