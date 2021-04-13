@@ -60,5 +60,8 @@
 ### Client-side
 - limitadores de taxa do lado do clinte, para restringir o número de solicitações enviadas a um serviço em um determinado periodo.
 
+### Server-side
+- limitadores de taxa do lado do servidor, são para restringir o número de solicitações recebidas por um serviço (ou cliente), em um determinado período.
+
 ## Projeto
 - Para testes, utilizei a ferramenta https://httpd.apache.org/docs/2.4/programs/ab.html ou utilize o choco para facilitar choco install apache-httpd
