@@ -76,3 +76,6 @@
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm install polardb-redis bitnami/redis --set cluster.enabled=false --set image.tag=6 --set password=admin
 ```
+
+### RequestRateLimiter
+- A implementação do requestRateLimiter no redis, é baseada no algoritimo bucket de token, ou seja, o usuário recebe um bucket de token (cada bucket tem uma capacidade máxima). Cada solicitação que o usuário efetuar, um token é retirado do bucket, caso não tenha mais, as requisições serão negadas até que o tempo limite mude e receba um novo bucket.
