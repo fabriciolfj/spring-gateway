@@ -13,3 +13,16 @@
 
 ## Filter
 - Modifica a solicitação ou resposta HTTP antes ou depois de encaminhar a mesma para serviço downstream.
+
+### Retry filter
+- Podemos configurar o gateway para efetuar uma retentativa, diante falha, ao serviço downstream. Para isso:
+  - configurar o tipo de erro/exceção que ocorrerá a retentativa.
+  - o time entre as retentativas
+
+## Circuit breaker
+- Uma forma de mantermos nossos serviços resilientes, ou seja, diante a falhas manter em funcionamento, é o uso de recurso que vem com spring cloud gateway, chamado circuit breaker.
+- Tal conceito vem de componentes eletrícos, e seu uso é bem similar.
+- Temos 3 estados: circuito aberto, semi aberto e fechado. Exemplo:
+  - Quando um serviço está apresentando falha, o circuito é aberto e executa um outro recurso (fallback).
+  - Enquanto o circuito estiver aberto, o recurso original não será chamado.
+  - Tempos em tempos, este verifica se o serviço original está operante, caso positivo, o circuito é fechado, caso negativo, circuito manten-se aberto.
