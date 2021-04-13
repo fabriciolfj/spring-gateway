@@ -66,3 +66,13 @@
 
 ## Projeto
 - Para testes, utilizei a ferramenta https://httpd.apache.org/docs/2.4/programs/ab.html ou utilize o choco para facilitar choco install apache-httpd
+
+## Controle de requisição
+- Dentro do spring gateway, existe o recurso para controlar o número de requisições, seja por usuário ou sessão.
+- Para este projeto utilizei um cache distribuído (redis) para tal controle.
+- Para adicionar dentro do cluster kubernetes, usei o helm:
+
+```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install polardb-redis bitnami/redis --set cluster.enabled=false --set image.tag=6 --set password=admin
+```
