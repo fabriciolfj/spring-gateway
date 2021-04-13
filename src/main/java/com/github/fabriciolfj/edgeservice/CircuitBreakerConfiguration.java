@@ -20,8 +20,8 @@ public class CircuitBreakerConfiguration {
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
         .circuitBreakerConfig(CircuitBreakerConfig
                 .custom()
-                .slidingWindowSize(20) //numero de janelas para registar as chamdas no estado fechado
-                .permittedNumberOfCallsInHalfOpenState(5) //quantidade e chamadas no estado semi aberto
+                .slidingWindowSize(5) //numero de janelas para registar as chamdas no estado fechado
+                .permittedNumberOfCallsInHalfOpenState(2) //quantidade e chamadas no estado semi aberto
                 .failureRateThreshold(50) //percentual de falhas sobre as janelas, para abrir o circuito
                 .waitDurationInOpenState(Duration.ofSeconds(6)) //tempo de espera antes de passar para o semiaberto
                 .build()

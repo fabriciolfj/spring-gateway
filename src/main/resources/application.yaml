@@ -36,7 +36,7 @@ spring:
               args:
                 - name: catalogCircuitBreaker
                   fallbackUri: forward:/catalog-fallback
-        - id:
+        - id: order-route
           uri: ${ORDER_SERVICE_URL:http://localhost:9003}/orders
           predicates:
             - Path=/orders/**
@@ -46,3 +46,7 @@ spring:
                 - name: orderCircuitBreaker
   lifecycle:
     timeout-per-shutdown-phase: 15s
+
+logging:
+  level:
+    io.github.resilience4j: DEBUG
