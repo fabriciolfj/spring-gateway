@@ -20,7 +20,8 @@
   - o time entre as retentativas
 
 ## Circuit breaker
-- Uma forma de mantermos nossos serviços resilientes, ou seja, diante a falhas manter em funcionamento, é o uso de recurso que vem com spring cloud gateway, chamado circuit breaker.
+- Uma forma de mantermos nossos serviços resilientes, ou seja, diante a falhas mante-lo em funcionamento
+- Este recurso vem incluso no spring cloud gateway, chamado circuit breaker.
 - Tal conceito vem de componentes eletrícos, e seu uso é bem similar.
 - Temos 3 estados: circuito aberto, semi aberto e fechado. Exemplo:
   - Quando um serviço está apresentando falha, o circuito é aberto e executa um outro recurso (fallback).
