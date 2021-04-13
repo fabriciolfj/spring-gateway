@@ -27,3 +27,23 @@
   - Quando um serviço está apresentando falha, o circuito é aberto e executa um outro recurso (fallback).
   - Enquanto o circuito estiver aberto, o recurso original não será chamado.
   - Tempos em tempos, este verifica se o serviço original está operante, caso positivo, o circuito é fechado, caso negativo, circuito manten-se aberto.
+- Precisa de um bean Customizer dentro do gateway, para o circuitbreaker funcionar, alem das configurações no application.yml
+
+```
+    @Bean
+    public Customizer<ReactiveResilience4JCircuitBreakerFactory> defaultCustomizer() {
+        return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
+        .circuitBreakerConfig(CircuitBreakerConfig
+                .custom()
+                .slidingWindowSize(20) //numero de janelas para registar as chamdas no estado fechado
+                .permittedNumberOfCallsInHalfOpenState(5) //quantidade e chamadas no estado semi aberto
+                .failureRateThreshold(50) //percentual de falhas sobre as janelas, para abrir o circuito
+                .waitDurationInOpenState(Duration.ofSeconds(6)) //tempo de espera antes de passar para o semiaberto
+                .build()
+        ).timeLimiterConfig(TimeLimiterConfig.custom()
+                        .timeoutDuration(TIMEOUT)
+                        .build())
+        .build());
+    }
+```    
+- Obs: o tempo limite configurado no customizer, terá precedência sobre o tempo limite de resposta definido netty timeout application.yml
