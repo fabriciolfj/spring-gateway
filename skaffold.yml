@@ -1,0 +1,15 @@
+
+apiVersion: skaffold/v2beta12
+kind: Config
+metadata:
+  name: edge-service
+build:
+  artifacts:
+    - image: fabricio211/edge-service:0.0.1-SNAPSHOT
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+      - k8s/catalog.yml
+      - k8s/service.yml

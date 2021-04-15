@@ -5,9 +5,24 @@ server:
   shutdown: graceful
 
 spring:
+  session:
+    store-type: none
+    timeout: 10m
+    redis:
+      namespace: polar:edge
+  redis:
+    connect-timeout: 5s
+    host: localhost
+    port: 6379
+    timeout: 500ms
   cloud:
     gateway:
       default-filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 10
+            redis-rate-limiter.burstCapacity: 20
+            limiter.requestedTokens: 1
         - name: Retry
           args:
             retries: 3 #vai retentar 3 vezes, caso ocorra erro 500 com as exceptions abaixo

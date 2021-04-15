@@ -56,3 +56,12 @@
 
 ## Projeto
 - Para testes, utilizei a ferramenta https://httpd.apache.org/docs/2.4/programs/ab.html ou utilize o choco para facilitar choco install apache-httpd
+
+## Implantação kubernetes
+- Instale o redis pelo helm
+```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+```
+```
+helm install polardb-redis bitnami/redis --set cluster.enabled=false --set password=admin
+```

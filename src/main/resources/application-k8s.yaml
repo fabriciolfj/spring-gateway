@@ -1,0 +1,69 @@
+server:
+  port: 9000
+  netty:
+    connection-timeout: 5s
+  shutdown: graceful
+
+spring:
+  session:
+    store-type: redis
+    timeout: 10m
+    redis:
+      namespace: polar:edge
+  redis:
+    connect-timeout: 5s
+    host: localhost
+    port: 6379
+    timeout: 500ms
+  cloud:
+    gateway:
+      default-filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 10
+            redis-rate-limiter.burstCapacity: 20
+            limiter.requestedTokens: 1
+        - name: Retry
+          args:
+            retries: 3 #vai retentar 3 vezes, caso ocorra erro 500 com as exceptions abaixo
+            methods: GET
+            series: SERVER_ERROR
+            exceptions: java.io.IOException, java.util.concurrent.TimeoutException
+            backoff: # formula firstBackoff * (factor ^ n )
+              firstBackoff: 50ms
+              maxBackoff: 500ms
+              factor: 2
+              baseOnPreviousValue: false
+      httpClient:
+        connect-timeout: 5000
+        response-timeout: 5s
+        pool:
+          type: elastic
+          max-idle-time: 15s
+          max-life-time: 60s
+      routes:
+        - id: catalog-route
+          uri: http://catalog-service:9001/books
+          predicates:
+            - Path=/books/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                - name: catalogCircuitBreaker
+                  fallbackUri: forward:/catalog-fallback
+        - id: order-route
+          uri: http://order-service:9003/orders
+          predicates:
+            - Path=/orders/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                - name: orderCircuitBreaker
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
+
+logging:
+  org:
+    springframeworkd: DEBUG
+  level:
+    io.github.resilience4j: DEBUG
