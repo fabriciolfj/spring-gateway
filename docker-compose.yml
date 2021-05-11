@@ -61,7 +61,7 @@ services:
 
   polarmq-broker:
     image: "rabbitmq:3-management"
-    container_name: "polar-broker"
+    container_name: "polarmq-broker-rabbitmq"
     ports:
       - 5672:5672
       - 15672:15672
