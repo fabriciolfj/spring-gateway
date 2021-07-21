@@ -27,7 +27,6 @@ import java.util.Objects;
 public class SecurityConfig {
 
     public static final String ACTUATOR = "/actuator/**";
-    public static final String SCOPE_CREDITO_LIMITE_TRANSACAO = "SCOPE_CoffeeAndITRole";
 
     /*
     * Armazenar o token e o token de atualizacao no redis
@@ -55,14 +54,6 @@ public class SecurityConfig {
                 .authorizeExchange()
                 .pathMatchers(ACTUATOR, "/swagger-ui.html", "/webjars/**",
                         "/swagger-resources/**", "/v2/api-docs/**", "/.well-known/**", "/", "/favicon.ico", "/swagger-ui/**").permitAll()
-                .pathMatchers("/v1/**", "/v2/**").access((authentication, object) -> authentication.flatMap(flatAuthentication ->
-                        Mono.just(new AuthorizationDecision(((JwtAuthenticationToken) flatAuthentication).getAuthorities()
-                                .contains(new SimpleGrantedAuthority(SCOPE_CREDITO_LIMITE_TRANSACAO))))
-
-                )
-
-
-        )
                 .anyExchange().authenticated()
                 .and()
                 .oauth2ResourceServer()
