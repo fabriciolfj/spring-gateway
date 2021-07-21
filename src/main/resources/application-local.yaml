@@ -7,16 +7,18 @@ server:
 spring:
   security:
     oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: edge-service
-            client-secret: polar-keycloak-secret
-            scope: openid
-        provider:
-          keycloak:
-            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080}/auth/realms/PolarBookshop
-
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${KEYCLOAK_URL:http://localhost:8080}/auth/realms/PolarBookshop/protocol/openid-connect/certs
+#      client:
+#        registration:
+#          keycloak:
+#            client-id: edge-service
+#            client-secret: polar-keycloak-secret
+#            scope: openid
+#        provider:
+#          keycloak:
+#            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080}/auth/realms/PolarBookshop
   active:
     profiles: k8s
   session:
@@ -76,9 +78,7 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 15s
 
-logging:
-  org:
-    springframeworkd: DEBUG
-  level:
-    io.github.resilience4j: DEBUG
-
+logging.level:
+  org.springframework.cloud.gateway: DEBUG
+  org.springframework.security: DEBUG
+  org.springframework.web.reactive.function.client: TRACE
