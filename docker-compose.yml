@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 services:
 
   polar-redis:
@@ -23,10 +23,10 @@ services:
     image: "fabricio211/catalog-service:0.0.1-SNAPSHOT"
     container_name: "catalog-service"
     ports:
-      - "8001:8001"
+      - "7001:7001"
       - "9001:9001"
     environment:
-      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7001
       - SPRING_DATASOURCE_URL=jdbc:postgresql://polardb-catalog:5432/polardb_catalog
     networks:
       - backend
@@ -71,23 +71,6 @@ services:
     networks:
       - backend
 
-  edge-service:
-    depends_on:
-      - polar-keycloak
-      - polar-redis
-    image: "polarbookshop/edge-service:0.0.1-SNAPSHOT"
-    container_name: "edge-service"
-    ports:
-      - 9000:9000
-      - 8000:8000
-    environment:
-      # JVM environment variable to enable debug through a socket on port 8000
-      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000
-      - CATALOG_SERVICE_URL=http://catalog-service:9001
-      - KEYCLOAK_URL=http://host.docker.internal:8080
-      - ORDER_SERVICE_URL=http://order-service:9002
-      - SPRING_PROFILES_ACTIVE=local
-      - SPRING_REDIS_HOST=polar-redis
 
   polar-keycloak:
     image: jboss/keycloak:14.0.0
